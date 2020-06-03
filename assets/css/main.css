@@ -1,0 +1,25 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.header{
+    background-color: rgb(95, 95, 173);
+    height: 60px;
+}
+
+#tag{
+    height: 25px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 30%;
+    margin-top: 15px;
+    font-size: 1rem;
+    padding: 3px;
+}
+
+#submit{
+    margin-left: 20px;
+    
+}
