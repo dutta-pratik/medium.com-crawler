@@ -1,12 +1,22 @@
 const port = 8000;
 const express = require("express");
+const bodyparser = require("body-parser");
+const cors = require("cors");
 
 const expressLayout = require("express-ejs-layouts");
 
 const app = express();
 
+//enables cors
+// app.use(cors({
+//     'allowedHeaders': ['sessionId', 'Content-Type'],
+//     'exposedHeaders': ['sessionId'],
+//     'origin': '*',
+//     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     'preflightContinue': false
+//   }));
+app.use(bodyparser.urlencoded({extended: true}));
 
-app.use(express.urlencoded({extended: true}));
 app.use(express.static("assets"));
 
 //using layout
