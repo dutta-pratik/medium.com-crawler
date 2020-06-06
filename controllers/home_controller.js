@@ -8,7 +8,7 @@ module.exports.homePage = async function(req, res){
     try{
         return res.render("admin_panel");
     }catch(err){
-        console.log("error in homepage");
+        console.log("error in homepage", err);
     }
 }
 
@@ -66,7 +66,7 @@ module.exports.search = async function(req, res){
             })
         }
     }catch(err){
-        console.log("error in homepage", err);
+        console.log("error in search", err);
     }
 }
 
@@ -135,6 +135,6 @@ module.exports.crawlData = async function(req, res){
                 .catch(console.error);
         }
     }catch(err){
-        console.log("error in homepage", err);
+        console.log("error in crawl", err);
     }
 }
