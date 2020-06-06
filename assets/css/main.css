@@ -33,3 +33,18 @@
     margin-left: 20%;
     width: 550px;
 }
+
+ul{
+    list-style: none;
+}
+
+#posts{
+    padding: 10px;
+    box-shadow: -3px -3px 7px rgb(168, 168, 168), 3px 3px 7px rgb(206, 206, 206);
+
+}
+
+#suggested-tag{
+    background-color: rgb(231, 229, 229);
+    cursor: pointer;
+}

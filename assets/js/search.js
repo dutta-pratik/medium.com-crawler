@@ -1,28 +1,15 @@
 
-// let search = document.getElementById("submit");
 
-// search.addEventListener("click", function(e){
-//     e.preventDefault();
-//     let formData = $("#tag");
-//     console.log("Print");
-//     $.ajax({
-//         type: "post",
-//         url: "/search",
-//         data: formData.serialize(),
-//         success: function(data){
-//             console.log("sarchajax",data);
-//         }, error: function(error){
-//             console.log(error.responseText);
-//         }
-//     });
-// });
 
 {
+/********************Search Links and Tags************************/
+
     let search = function(){
+        
         let searchData = $("#search-form");
         searchData.submit(function(e){
             e.preventDefault();
-            console.log("II");
+            // console.log("II");
             
             $.ajax({
                 type: "post",
@@ -30,13 +17,21 @@
                 data: searchData.serialize(),
                 success: function(data){
                     cleardata();
-                    console.log(data.data.nonredArray[0]);
+                    // console.log(data.data.nonredArray[0]);
+                    // console.log(data);
+                    let tags = data.data.tags;
                     if(data.data.nonredArray.length > 0){
                         for(let i=0; i<data.data.nonredArray.length; i++){
                             crawlData(data.data.nonredArray[i]);
                         }
-                    }else{
-                        //suggest similar keyword
+                    }
+                    //related tags
+                    
+                    // console.log(data.data.tags[0]);
+                    for(let i=0;i<tags.length;i++){
+                        // console.log(tags[i]);
+                        let tag = renderTag(tags[i]);
+                        $(".tags").append(tag);
                     }
                     
                     return;
@@ -47,13 +42,14 @@
         });
     }
 
-    
+
+/********************Crawl Data************************/
 
     let crawlData = function(link){
-        console.log("crawl");
-        console.log(link);
+        // console.log("crawl");
+        // console.log(link);
         linkSplit = link.split("?");
-        console.log(linkSplit);
+        // console.log(linkSplit);
         link = {
             link : linkSplit[0]
         }
@@ -72,13 +68,30 @@
         });
     }
 
+
+/********************Clear DOM************************/
+
     let cleardata = function(){
         document.querySelectorAll(".post-list").forEach((item, index) => {
-            console.log("item",item);
+            // console.log("item",item);
             item.innerHTML = "";
-            console.log(item);
+            // console.log(item);
+        });
+        document.querySelectorAll("#suggested-tag").forEach((item,index) => {
+            item.innerHTML = "";
         });
     }
+
+    let renderTag = function(tag){
+        return $(`
+            <span> <code id="suggested-tag" class="${tag}"> ${tag} </code>&nbsp;
+            &nbsp; </span> 
+        `);
+    }
+
+
+    
+/********************Rendering Blogs************************/
 
     let renderPost = function(data){
         return $(

@@ -1,7 +1,9 @@
+/********************Importing Package************************/
 const axios = require("axios");
 const cheerio = require("cheerio");
 const puppeteer = require("puppeteer");
 
+/********************Controller FOR homepage************************/
 module.exports.homePage = async function(req, res){
     try{
         return res.render("admin_panel");
@@ -10,18 +12,15 @@ module.exports.homePage = async function(req, res){
     }
 }
 
+/********************Controller FOR search************************/
 module.exports.search = async function(req, res){
     try{
         if(req.xhr){
-            console.log("tag",req.body);
+            // console.log("tag",req.body);
             let tag = req.body.tag;
             let tagURL = `https://medium.com/tag/${tag}`;
-            console.log(tagURL);
-            // const url = "https://medium.com/hackernoon/the-future-of-cyber-security-in-the-fintech-era-78b9d7f7c0f0";
-            // const url1 = "https://medium.com/tag/politics";
-            // const url2 = "https://medium.com/search?q=block";
-           
-
+            // console.log(tagURL);
+            
             let browser = await puppeteer.launch();
             let page = await browser.newPage();
             await page.goto(tagURL, {
@@ -31,12 +30,13 @@ module.exports.search = async function(req, res){
             
             let data = await page.evaluate(() => {
 
-                let div =  document.querySelectorAll("[data-action='open-post']");
+                //fetching post
+                let posts =  document.querySelectorAll("[data-action='open-post']");
 
                 let postArr = [];
                 
-                for(let i=0; i<div.length; i++){
-                    let m = div[i].getAttribute("href");
+                for(let i=0; i<posts.length; i++){
+                    let m = posts[i].getAttribute("href");
                     postArr.push(m);
                 }
 
@@ -45,12 +45,22 @@ module.exports.search = async function(req, res){
                    nonredArray.push(postArr[i]);
                 }
                 
+                //fetching tags
+                let tags = [];
+                
+                document.querySelectorAll("[data-action-source='related']").forEach((item, index) => {
+                    // console.log("index",item);
+                    tags.push(item.innerText);
+                });
+                
+                
                 return {
-                    nonredArray
+                    nonredArray,
+                    tags
                 }
             });
 
-            console.log("scrape", data);
+            // console.log("scrape", data);
             return res.status(200).json({
                 data: data
             })
@@ -60,16 +70,14 @@ module.exports.search = async function(req, res){
     }
 }
 
-
+/********************Controller FOR crawlData************************/
 module.exports.crawlData = async function(req, res){
     try{
         console.log("link",req.body);
         if(req.xhr){
             let link = req.body.link;
-            console.log("L", link);
-            // console.log(req.body.link);
-            // const url = "https://medium.com/hackernoon/the-future-of-cyber-security-in-the-fintech-era-78b9d7f7c0f0";
-            // const url1 = "https://medium.com/@shenequagolding/maintaining-professionalism-in-the-age-of-black-death-is-a-lot-5eaec5e17585";
+            // console.log("L", link);
+           
             axios(link)
                 .then(response => {
                     // console.log("resp", response);
@@ -78,36 +86,36 @@ module.exports.crawlData = async function(req, res){
 
                     //fetching title
                     const title = $('h1:first-child');
-                    console.log($(title).text());
+                    // console.log($(title).text());
                     let postTitle = $(title).text();
 
                     //fetching blog details
                     const details = $("section:nth-child(2) > div > div > div > div div > div > span:nth-child(2)");
-                    console.log($(details).text());
+                    // console.log($(details).text());
                     let postDetails = $(details).text();
 
                     //fetching author
                     const author = $("section:nth-child(2) > div > div > div > div div > div > div > div div > span > a");
-                    console.log($(author).text());
+                    // console.log($(author).text());
                     let postAuthor = $(author).text();
                     // console.log("html",html);
 
                     //fetching tags
                     const tagarr = [];
                     const tag = $("ul > li [href^='/tag']");
-                    console.log($(tag).text());
+                    // console.log($(tag).text());
                     tag.each(e =>{
                         tagarr.push(tag[e].children[0].data);
                     });
-                    console.log(tagarr);
+                    // console.log(tagarr);
 
                     //fetching content
                     const content = $("section:nth-child(2) > div.n.p > div");
-                    console.log($(content).html());
+                    // console.log($(content).html());
 
                     //response text
                     const responseText = $("a[href^='https://medium.com/p'] span div");
-                    console.log("****************************", $(responseText).text());
+                    // console.log("****************************", $(responseText).text());
 
                     //response Link
                     
