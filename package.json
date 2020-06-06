@@ -18,5 +18,8 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "puppeteer": "^3.3.0"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
