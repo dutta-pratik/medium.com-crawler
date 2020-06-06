@@ -21,7 +21,12 @@ module.exports.search = async function(req, res){
             let tagURL = `https://medium.com/tag/${tag}`;
             // console.log(tagURL);
             
-            let browser = await puppeteer.launch();
+            let browser = await puppeteer.launch({
+                args: [
+                  '--no-sandbox',
+                  '--disable-setuid-sandbox',
+                ],
+              });
             let page = await browser.newPage();
             await page.goto(tagURL, {
                 waitUntil: 'networkidle2',
