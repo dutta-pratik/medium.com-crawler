@@ -1,7 +1,7 @@
 # medium.com-crawler
 
 It is a Web crawler for Medium(dot)com blog post. It crawl latest posts based on the hashtag provided by the client in search field. It also shows the other hashtags related to the hashtag provided by user.<br><br>
-<code>Link</code>:&nbsp; https://afternoon-ravine-81437.herokuapp.com/<br>
+<code>Link</code>:&nbsp; https://mediumcrawler.herokuapp.com/<br>
 # Index
 <ul>
 <li><a href="#1">How to Setup the Code into your System</a>
