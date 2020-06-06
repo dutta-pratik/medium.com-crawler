@@ -63,12 +63,14 @@ module.exports.search = async function(req, res){
 
 module.exports.crawlData = async function(req, res){
     try{
-
+        console.log("link",req.body);
         if(req.xhr){
-            console.log(req.body);
-            const url = "https://medium.com/hackernoon/the-future-of-cyber-security-in-the-fintech-era-78b9d7f7c0f0";
-            const url1 = "https://medium.com/@shenequagolding/maintaining-professionalism-in-the-age-of-black-death-is-a-lot-5eaec5e17585";
-            axios(url1)
+            let link = req.body.link;
+            console.log("L", link);
+            // console.log(req.body.link);
+            // const url = "https://medium.com/hackernoon/the-future-of-cyber-security-in-the-fintech-era-78b9d7f7c0f0";
+            // const url1 = "https://medium.com/@shenequagolding/maintaining-professionalism-in-the-age-of-black-death-is-a-lot-5eaec5e17585";
+            axios(link)
                 .then(response => {
                     // console.log("resp", response);
                     const html = response.data;
@@ -111,7 +113,7 @@ module.exports.crawlData = async function(req, res){
                     
                     return res.status(200).json({
                         data:{
-                            link: url1,
+                            link: link,
                             title: postTitle,
                             details: postDetails,
                             author: postAuthor,

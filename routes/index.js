@@ -8,6 +8,6 @@ router.get("/", homeController.homePage);
 
 router.post("/search", homeController.search);
 
-router.get("/crawldata", homeController.crawlData);
+router.post("/crawldata", homeController.crawlData);
 
 module.exports = router;
