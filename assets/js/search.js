@@ -34,6 +34,8 @@
                         $(".tags").append(tag);
                     }
                     
+                    
+
                     return;
                 }, error: function(err){
                     console.log(err.responseText);
@@ -101,16 +103,16 @@
                         <strong>${data.title}</strong>
                     </div>
                     <div>
-                        Author: ${data.author}
+                        <strong>Author</strong>: ${data.author}
                     </div>
                     <div>
-                        Details: ${data.details}
+                    <strong>Details</strong>: ${data.details}
                     </div>
                     <div>
-                        <code>${data.tag}</code>
+                    <strong>Tags</strong>: <code>${data.tag}</code>
                     </div>
                     <div>
-                        Link: <a href="${data.link}" target="_blank">Click here</a> 
+                    <strong>Link to post</strong>: <a href="${data.link}" target="_blank">Click here</a> 
                     </div>
                 </div>
             </li>
